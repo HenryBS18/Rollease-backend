@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100)
+  email String @db.VarChar(100)
+  password String @db.VarChar(100)
+  birthdate DateTime
+  
+  history History[]
+}
+
+model Station {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100)
+  location Json
+}
+
+model Vehicle {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100)
+  type String @db.VarChar(100)
+  imageUrl String @db.VarChar(255)
+  battery Int
+  inUse Boolean
+  currentLocation Json
+  currentStation Int
+  argoPrice Int
+
+  history History[]
+}
+
+model History {
+  id Int @id @default(autoincrement())
+  userId Int
+  vehicleId Int
+  bookingType String @db.VarChar(10)
+  startStation Int
+  endStation Int
+  startTime DateTime
+  endTime DateTime
+  vehicleReturnImage String @db.VarChar(255)
+  paymentMethod String @db.VarChar(100)
+  totalTime Int
+  totalPrice Int
+
+  user User @relation(fields: [userId], references: [id])
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id])
+}

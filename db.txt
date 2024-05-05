@@ -1,0 +1,36 @@
+User:
+  - id int auto_increment (pk)
+  - name varchar(100)
+  - email varchar(100)
+  - password varchar(100)
+  - birthdate datetime
+
+Station:
+  - id int auto_increment (pk)
+  - name varchar(100)
+  - location point
+
+Vehicle:
+  - id int auto_increment (pk)
+  - name varchar(100)
+  - type varchar(100)
+  - image varchar(255)
+  - battery int
+  - in_use boolean
+  - current_location point
+  - current_station int
+  - argo_price int
+
+History:
+  - user_id int (fk)
+  - vechicle_id int (fk)
+  - booking_type varchar(10)
+  - start_station int
+  - end_station int
+  - start_time datetime
+  - end_time datetime
+  - returned_image varchar(255)
+  - payment_method varchar(100)
+  - total_time int
+  - total_price int
+
