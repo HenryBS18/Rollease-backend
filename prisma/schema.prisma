@@ -14,49 +14,50 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(100)
-  email String @db.VarChar(100)
-  password String @db.VarChar(100)
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  email     String   @db.VarChar(100)
+  password  String   @db.VarChar(100)
   birthdate DateTime
-  
+
   history History[]
 }
 
 model Station {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(100)
-  location Json
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(100)
+  coordinates Json
+  imageUrl    String @db.Text
 }
 
 model Vehicle {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(100)
-  type String @db.VarChar(100)
-  imageUrl String @db.VarChar(255)
-  battery Int
-  inUse Boolean
-  currentLocation Json
-  currentStation Int
-  argoPrice Int
+  id                 Int     @id @default(autoincrement())
+  name               String  @db.VarChar(100)
+  type               String  @db.VarChar(100)
+  imageUrl           String  @db.Text
+  battery            Int
+  inUse              Boolean
+  currentCoordinates Json
+  currentStation     Int
+  argoPrice          Int
 
   history History[]
 }
 
 model History {
-  id Int @id @default(autoincrement())
-  userId Int
-  vehicleId Int
-  bookingType String @db.VarChar(10)
-  startStation Int
-  endStation Int
-  startTime DateTime
-  endTime DateTime
-  vehicleReturnImage String @db.VarChar(255)
-  paymentMethod String @db.VarChar(100)
-  totalTime Int
-  totalPrice Int
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  vehicleId          Int
+  bookingType        String   @db.VarChar(10)
+  startStationId     Int
+  endStationId       Int
+  startTime          DateTime
+  endTime            DateTime
+  vehicleReturnImage String   @db.Text
+  paymentMethod      String   @db.VarChar(100)
+  totalTime          Int
+  totalPrice         Int
 
-  user User @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
   vehicle Vehicle @relation(fields: [vehicleId], references: [id])
 }
