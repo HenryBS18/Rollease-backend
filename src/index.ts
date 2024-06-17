@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import type { Express, Request, Response } from 'express';
-import { userRouter } from './routers';
+import { stationRouter, userRouter } from './routers';
 
 dotenv.config();
 
@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/user', userRouter);
+app.use('/api/station', stationRouter);
 
 app.use('*', (req: Request, res: Response) => {
   res.status(404).json({
