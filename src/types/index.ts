@@ -12,3 +12,15 @@ export interface UserPayload {
   email: string;
   birthdate: Date;
 }
+
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
+
+export interface Station {
+  id: number;
+  name: string;
+  coordinates: Coordinates;
+  imageUrl: string;
+}
