@@ -37,7 +37,7 @@ userRouter.post('/login', async (req: Request, res: Response) => {
   try {
     const payload = await UserService.login(email as string, password as string);
     const secret = process.env.JWT_SECRET!;
-    const expiresIn = 60 * 60 * 1
+    const expiresIn = 60 * 60 * 24 * 30
     const token = jwt.sign(payload, secret, {
       expiresIn: expiresIn
     });
