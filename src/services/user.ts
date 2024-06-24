@@ -2,7 +2,7 @@ import { User, UserPayload } from "types";
 import { UserRepo } from "../repositories";
 import bcrypt from 'bcrypt';
 
-const register = async (user: User): Promise<User> => {
+const register = async (user: User): Promise<UserPayload> => {
   const isEmailExist = await getByEmail(user.email);
 
   if (isEmailExist) {
@@ -12,7 +12,16 @@ const register = async (user: User): Promise<User> => {
   const hashedPassword = await bcrypt.hash(user.password, 10);
   user.password = hashedPassword;
 
-  return await UserRepo.create(user);
+  const userRes: User = await UserRepo.create(user);
+
+  const payload = {
+    id: userRes.id!,
+    name: userRes.name,
+    email: userRes.email,
+    birthdate: userRes.birthdate
+  }
+
+  return payload;
 }
 
 const getByEmail = async (email: string): Promise<User | null> => {

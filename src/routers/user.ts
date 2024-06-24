@@ -8,6 +8,7 @@ export const userRouter: Router = express.Router();
 
 userRouter.post('/register', async (req: Request, res: Response) => {
   const { name, email, password, birthdate } = req.query;
+
   const user: User = {
     name: name as string,
     email: email as string,
@@ -16,15 +17,20 @@ userRouter.post('/register', async (req: Request, res: Response) => {
   }
 
   try {
-    const userResult = await UserService.register(user);
+    const payload = await UserService.register(user);
+    const secret = process.env.JWT_SECRET!;
+    const expiresIn = 60 * 60 * 24 * 30
+    const token = jwt.sign(payload, secret, {
+      expiresIn: expiresIn
+    });
 
-    res.status(201).json({
-      message: "User created successfully",
-      user: userResult
+    res.status(200).json({
+      data: payload,
+      token: token
     });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({
+      res.status(400).json({
         message: error.message
       })
     }
