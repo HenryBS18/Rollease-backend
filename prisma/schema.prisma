@@ -38,7 +38,7 @@ model Vehicle {
   battery            Int
   inUse              Boolean
   currentCoordinates Json
-  currentStation     Int
+  currentStationId   Int
   argoPrice          Int
 
   history History[]
